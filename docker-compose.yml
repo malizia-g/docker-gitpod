@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  client:
+      build:
+        dockerfile: Dockerfile
+        context: ./client
+      volumes:
+        #In questo modo dico a docker di usare la cartella del container /app/node_modules come volume
+        #La cartella locale node_modules non verrà più copiata
+        - /app/node_modules 
+        #Qui mappa tutto il contenuto della cartella locale client nella cartella app dell'immagine
+        #Ricorda che la WORKDIR dell'immagine è la cartella app
+        - ./client:/app
+      ports:
+        - 4200:4200
