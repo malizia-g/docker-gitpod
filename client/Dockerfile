@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:17-alpine
 #/app è la cartella che conterrà tutti i file all'interno del container
 WORKDIR '/app' 
 #Copia e installa le dipendenze, se non ci sono cambiamenti docker recupera questa immagine dalla cache
