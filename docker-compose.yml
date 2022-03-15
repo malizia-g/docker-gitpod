@@ -26,6 +26,21 @@ services:
         - 5000:5000
       networks:
       - shared-network
+  mongo-server:
+    image: mongo:latest     #Possiamo scaricare l'immagine anche da
+    hostname: test_mongodb  #cambia l'hostname da mongo-server a test_mongo
+    environment:            #setta alcune variabili d'ambiente
+      - MONGO_INITDB_DATABASE=animal_db
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=pass
+    volumes:
+      #Crea un nuovo bineded volume per il container di mongoDB (condividento il file init-db.js)
+      # https://stackoverflow.com/questions/42912755/how-to-create-a-db-for-mongodb-container-on-start-up
+      - ./mongo-server/init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro    
+    ports:
+      - 27017:27017
+    networks:
+      - shared-network
 
 networks:
   shared-network:

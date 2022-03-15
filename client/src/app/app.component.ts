@@ -13,11 +13,7 @@ export class AppComponent {
   {
     this.http.get("https://5000-maliziag-dockergitpod-6ia3zbqltpp.ws-eu34.gitpod.io/simple_json")
     .subscribe(
-      (data) => 
-      {
-        this.data = data;
-        console.log(data);
-      }
+      (data) => this.data = data
     )
   }
 }
