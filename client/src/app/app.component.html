@@ -1,3 +1,7 @@
 <h1>hello world!</h1>
 
-{{data | json}}
+<ul>
+    <li *ngFor = "let animal of data">
+        {{animal.id}} - {{animal.name}} - {{animal.type}}
+    </li>
+</ul>

@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
 
+import { Component } from '@angular/core';
+import { AnimalsService } from './animals.service';
+import { Animal, VettAnimal } from './animals.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,12 +9,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'client';
-  data = {};
-  constructor(private http: HttpClient)
+  data = new Array<Animal>();
+  constructor(private animalService : AnimalsService)
   {
-    this.http.get("https://5000-maliziag-dockergitpod-6ia3zbqltpp.ws-eu34.gitpod.io/simple_json")
-    .subscribe(
-      (data) => this.data = data
+    this.animalService.getAnimals().subscribe(
+      (data: VettAnimal)=>{this.data = data['animals']}
     )
   }
 }

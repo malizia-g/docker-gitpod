@@ -10,10 +10,10 @@ CORS(app)
 def get_db():
     client = MongoClient(host='test_mongodb',
                          port=27017, 
-                         username='root', 
-                         password='pass',
-                        authSource="admin")
-    db = client["animal_db"]
+                         username=os.environ["MONGO_INITDB_ROOT_USERNAME"], 
+                         password=os.environ["MONGO_INITDB_ROOT_PASSWORD"],
+                         authSource="admin")
+    db = client[os.environ["MONGO_INITDB_DATABASE"]]
     return db
 
 #Creo una route per ottenere tutti gli animali
@@ -37,7 +37,7 @@ def env():
     return jsonify(
             {"env":[
                 {"MONGO_INITDB_DATABASE": os.environ["MONGO_INITDB_DATABASE"]},
-                {"MONGO_INITDB_ROOT_USERNAME": os.environ["MONGO_INITDB_DATABASE"]},
+                {"MONGO_INITDB_ROOT_USERNAME": os.environ["MONGO_INITDB_ROOT_USERNAME"]},
                 {"MONGO_INITDB_ROOT_PASSWORD": os.environ["MONGO_INITDB_ROOT_PASSWORD"]}
             ]})
 
@@ -47,7 +47,7 @@ def ping_server():
 
 @app.route('/simple_json')
 def simple_json():
-    return jsonify('{saluto:ciao}')
+    return jsonify({'saluto':'ciao'})
 
 if __name__=='__main__':
     app.run(host="0.0.0.0", port=5000)

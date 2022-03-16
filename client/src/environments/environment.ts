@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  baseUrlServer: 'https://5000-maliziag-dockergitpod-6ia3zbqltpp.ws-eu34.gitpod.io/'
 };
 
 /*

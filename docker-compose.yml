@@ -1,4 +1,11 @@
 version: '3.7'
+
+#setta alcune variabili d'ambiente
+x-common-variables: &mongo-variables
+  - MONGO_INITDB_DATABASE=animal_db
+  - MONGO_INITDB_ROOT_USERNAME=root
+  - MONGO_INITDB_ROOT_PASSWORD=pass
+
 services:
   client:
       build:
@@ -20,10 +27,8 @@ services:
       build:
         dockerfile: Dockerfile
         context: ./server
-      environment:
-      - MONGO_INITDB_DATABASE=animal_db
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=pass
+      environment: *mongo-variables
+      
       volumes:
         - ./server:/app
       ports:
@@ -33,10 +38,7 @@ services:
   mongo-server:
     image: mongo:latest     #Possiamo scaricare l'immagine anche da
     hostname: test_mongodb  #cambia l'hostname da mongo-server a test_mongo
-    environment:            #setta alcune variabili d'ambiente
-      - MONGO_INITDB_DATABASE=animal_db
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=pass
+    environment:  *mongo-variables          
     volumes:
       #Crea un nuovo bineded volume per il container di mongoDB (condividento il file init-db.js)
       # https://stackoverflow.com/questions/42912755/how-to-create-a-db-for-mongodb-container-on-start-up
