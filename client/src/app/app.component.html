@@ -1,5 +1,23 @@
 <h1>hello world!</h1>
 
+<!--Crea una reactive form-->
+<section>
+    <h1>Reactive Form Example:</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <p>
+            <label>Animale Name</label>
+            <input type="text" formControlName="name">
+        </p>
+        <p>
+            <label>Animal Type</label>
+            <input type="text" formControlName="type">
+        </p>
+        <p>
+            <button type="submit">Submit</button>
+        </p>
+    </form>
+</section>
+
 <ul>
     <li *ngFor = "let animal of data">
         {{animal.id}} - {{animal.name}} - {{animal.type}}
