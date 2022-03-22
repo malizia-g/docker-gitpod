@@ -7,6 +7,15 @@ x-common-variables: &mongo-variables
   - MONGO_INITDB_ROOT_PASSWORD=pass
 
 services:
+  nginx-proxy:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports: 
+      - 8080:8080
+    networks:
+      - shared-network
   client:
       build:
         dockerfile: Dockerfile
@@ -23,7 +32,7 @@ services:
         - 4200:4200
       networks:
       - shared-network
-  server:
+  api-server:
       build:
         dockerfile: Dockerfile
         context: ./server
