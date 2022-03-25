@@ -20,6 +20,6 @@
 
 <ul>
     <li *ngFor = "let animal of data">
-        {{animal.id}} - {{animal.name}} - {{animal.type}}
+        <app-animal [animal]="animal"></app-animal>
     </li>
 </ul>

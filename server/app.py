@@ -1,11 +1,11 @@
 from flask import Flask, jsonify, request, json
 from flask_cors import CORS
 from pymongo import MongoClient
-
+import redis #<--qui
 import os
-
 app = Flask(__name__)
 CORS(app)
+redis_client = FlaskRedis(app)
 
 #Creo una funzione che posso riciclare ogni volta che devo accedere al DB
 def get_db():
@@ -16,6 +16,22 @@ def get_db():
                          authSource="admin")
     db = client[os.environ["MONGO_INITDB_DATABASE"]]
     return db
+
+def get_redis():
+    return redis.Redis(host=os.environ["REDIS_HOST"], port=os.environ["REDIS_PORT"], db=0)
+
+@app.route('/feedAnimal', methods = ['POST'])
+def feedAnimal():
+    r = get_redis()
+    food_qty = r.incr(request.json['id'], 1)
+    print(food_qty, flush=True) # In caso di test aggiungere Flush
+    resp = app.response_class(
+        response= json.dumps({"id":request.json['id'], "food_qty":food_qty}),
+        status=200,
+        mimetype='application/json'
+    )
+    return resp
+
 
 @app.route('/newAnimal', methods = ['POST'])
 def newAnimal():
@@ -30,7 +46,7 @@ def newAnimal():
     x = db.animal_tb.insert_one(request.json)
     #creo la risposta per il client
     resp = app.response_class(
-        response= json.dumps({"id":request.json['id'], "name":request.json['id'], "type":request.json['type']}),
+        response= json.dumps({"id":request.json['id'], "name":request.json['name'], "type":request.json['type']}),
         status=200,
         mimetype='application/json'
     )

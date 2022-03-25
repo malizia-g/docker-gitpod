@@ -1,31 +1,30 @@
-%YAML 1.1 #<-Passa alla versione 1.1 di YAML
----
+#%YAML 1.1 #<-Passa alla versione 1.1 di YAML
+#---
 version: '3.7'
 
 #setta alcune variabili d'ambiente
-x-common-variables: 
-  &mongo-variables
-    MONGO_INITDB_DATABASE: animal_db
-    MONGO_INITDB_ROOT_USERNAME: root
-    MONGO_INITDB_ROOT_PASSWORD: pass
+x-common-variables: &mongo-variables
+  - MONGO_INITDB_DATABASE=animal_db
+  - MONGO_INITDB_ROOT_USERNAME=root
+  - MONGO_INITDB_ROOT_PASSWORD=pass
 
-x-redis-common-variables:
-   &redis-variables #<- Crea delle variabili d'amniente per redis
-    REDIS_HOST: redis
-    REDIS_PORT: 6379 
+#x-redis-common-variables: &redis-variables #<- Crea delle variabili d'amniente per redis
+#  - REDIS_HOST=redis
+#  - REDIS_PORT=6379 
 
 services:
   redis:
     image: 'redis:latest'
-
+    
+  
   api-server:
     build:
       dockerfile: Dockerfile
       context: ./server
     environment: 
       <<: *mongo-variables
-      <<: *redis-variables
-  
+      #<<: *redis-variables #<- Aggiungi le variabili d'ambiente redis al servizo api-server
+    
     volumes:
       - ./server:/app
     ports:
