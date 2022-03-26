@@ -13,7 +13,7 @@ export class AnimalsService {
   //Il metodo fa una chiamata Http al server
   getAnimals() {
     //return this.http.get<VettAnimal>(environment.baseUrlServer + 'animals');
-    return this.http.get<VettAnimal>('https://8080-maliziag-dockergitpod-6ia3zbqltpp.ws-eu38.gitpod.io/api/animals');
+    return this.http.get<VettAnimal>(environment.baseUrlServer+'api/animals');
   }
 
   httpOptions = {
