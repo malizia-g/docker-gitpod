@@ -5,7 +5,7 @@ import redis #<--qui
 import os
 app = Flask(__name__)
 CORS(app)
-redis_client = FlaskRedis(app)
+
 
 #Creo una funzione che posso riciclare ogni volta che devo accedere al DB
 def get_db():
@@ -17,15 +17,18 @@ def get_db():
     db = client[os.environ["MONGO_INITDB_DATABASE"]]
     return db
 
-def get_redis():
+def get_redis(): #Ottengo un'stanza della libreria redis
     return redis.Redis(host=os.environ["REDIS_HOST"], port=os.environ["REDIS_PORT"], db=0)
+
+#curl -X POST -H "Content-Type: application/json"  -d '{"id": "1"}' http://localhost:5000/feedAnimal
+#curl http://localhost:5000/
 
 @app.route('/feedAnimal', methods = ['POST'])
 def feedAnimal():
     r = get_redis()
-    food_qty = r.incr(request.json['id'], 1)
-    print(food_qty, flush=True) # In caso di test aggiungere Flush
-    resp = app.response_class(
+    food_qty = r.incr(request.json['id'], 1)   #Incremeta la quantità di cibo fornita a un animale di una unità
+    #print(food_qty, flush=True) # In caso di test aggiungere Flush
+    resp = app.response_class(  #Creo una risposta da inviare al client come conferma
         response= json.dumps({"id":request.json['id'], "food_qty":food_qty}),
         status=200,
         mimetype='application/json'
@@ -79,8 +82,8 @@ def get_stored_animals():
         _animals = db.animal_tb.find()
         animals = [{"id": animal["id"], "name": animal["name"], "type": animal["type"]} for animal in _animals]
         return jsonify({"animals": animals})
-    except:
-        pass
+    except ex:
+        print(ex,flush=True)
     finally:
         if type(db)==MongoClient:
             db.close()

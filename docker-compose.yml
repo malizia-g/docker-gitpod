@@ -2,30 +2,33 @@
 ---
 version: '3.7'
 
-#setta alcune variabili d'ambiente
-x-common-variables: 
+x-common-variables: # <- Crea delle variabili d'ambiente per mongo
   &mongo-variables
     MONGO_INITDB_DATABASE: animal_db
     MONGO_INITDB_ROOT_USERNAME: root
     MONGO_INITDB_ROOT_PASSWORD: pass
 
-x-redis-common-variables:
-   &redis-variables #<- Crea delle variabili d'amniente per redis
+x-redis-common-variables: #<- Crea delle variabili d'ambiente per redis
+   &redis-variables 
     REDIS_HOST: redis
     REDIS_PORT: 6379 
 
-services:
+services: #<- Crea il redis-container
   redis:
     image: 'redis:latest'
+    ports:
+      - 6379:6379
+    networks:
+      - shared-network
 
   api-server:
     build:
       dockerfile: Dockerfile
       context: ./server
-    environment: 
+    environment:
       <<: *mongo-variables
       <<: *redis-variables
-  
+    
     volumes:
       - ./server:/app
     ports:
@@ -42,6 +45,7 @@ services:
       - 8080:8080
     networks:
       - shared-network
+      
   client:
       build:
         dockerfile: Dockerfile
