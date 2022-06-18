@@ -33,10 +33,10 @@ jobs:
       #     docker push ghcr.io/fmalizia/client:latest
      
 
-      # setup Docker build action
-      # - name: Set up Docker Buildx
-      #   id: buildx
-      #   uses: docker/setup-buildx-action@v2
+      #setup Docker build action
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
 
      
       
