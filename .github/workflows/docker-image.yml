@@ -27,9 +27,10 @@ jobs:
           password: ${{ secrets.GHCR_PAT }}  
 
       - name: Build the DockerImage (explicit)
-      - run: docker build -f ./client/Dockerfile.prod -t ghcr.io/fmalizia/client:latest ./client
-      - run: docker run ghcr.io/fmalizia/client:latest
-      - run: docker push ghcr.io/fmalizia/client:latest
+      - run: |
+          docker build -f ./client/Dockerfile.prod -t ghcr.io/fmalizia/client:latest ./client
+          docker run ghcr.io/fmalizia/client:latest
+          docker push ghcr.io/fmalizia/client:latest
      
 
       # setup Docker build action
