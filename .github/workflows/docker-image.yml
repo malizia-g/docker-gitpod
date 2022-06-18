@@ -26,11 +26,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_PAT }}  
 
-      - name: Build the DockerImage (explicit)
-      - run: |
-          docker build -f ./client/Dockerfile.prod -t ghcr.io/fmalizia/client:latest ./client
-          docker run ghcr.io/fmalizia/client:latest
-          docker push ghcr.io/fmalizia/client:latest
+      # - name: Build the DockerImage (explicit)
+      # - run: |
+      #     docker build -f ./client/Dockerfile.prod -t ghcr.io/fmalizia/client:latest ./client
+      #     docker run ghcr.io/fmalizia/client:latest
+      #     docker push ghcr.io/fmalizia/client:latest
      
 
       # setup Docker build action
