@@ -46,7 +46,7 @@ jobs:
           # relative path to the place where source code with Dockerfile is located
           context: ./client
           file: ./client/Dockerfile.prod
-          tags: ghcr.io/fmalizia/client:latest
+          tags: ghcr.io/malizia-g/client-ci:latest
          
       #     # build on feature branches, push only on main branch
       #     push: ${{ github.ref == 'refs/heads/main' }}
