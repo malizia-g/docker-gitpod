@@ -26,11 +26,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_PAT }}  
 
-      - name: Build the DockerImage (explicit)
-        run: |
-          docker build -f ./client/Dockerfile.prod -t ghcr.io/fmalizia/client:latest ./client
-          docker run ghcr.io/fmalizia/client:latest
-          docker push ghcr.io/fmalizia/client:latest
+      # - name: Build the DockerImage (explicit)
+      #   run: |
+      #     docker build -f ./client/Dockerfile.prod -t ghcr.io/fmalizia/client:latest ./client
+      #     docker run ghcr.io/fmalizia/client:latest
+      #     docker push ghcr.io/fmalizia/client:latest
      
 
       # setup Docker build action
@@ -40,15 +40,16 @@ jobs:
 
      
       
-      # - name: Build image and push to Docker Hub and GitHub Container Registry
-      #   uses: docker/build-push-action@v3
-      #   with:
-      #     # relative path to the place where source code with Dockerfile is located
-      #     context: ./client
-      #     file: Dockerfile.prod
+      - name: Build image and push to Docker Hub and GitHub Container Registry
+        uses: docker/build-push-action@v3
+        with:
+          # relative path to the place where source code with Dockerfile is located
+          context: ./client
+          file: Dockerfile.prod
+          tags: ghcr.io/fmalizia/client:latest
          
       #     # build on feature branches, push only on main branch
       #     push: ${{ github.ref == 'refs/heads/main' }}
 
-      # - name: Image digest
-      #   run: echo ${{ steps.docker_build.outputs.digest }}
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
