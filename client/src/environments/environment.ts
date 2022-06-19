@@ -2,9 +2,12 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const environment = {
-  production: false,
-  baseUrlServer: 'https://8080-maliziag-dockergitpod-6ia3zbqltpp.ws-eu38.gitpod.io/'
+export class environment  {
+  static production: false;
+  static get baseUrlServer(): string
+  {
+    return process.env.NG_APP_GITPOD_WORKSPACE_URL.replace("https://","https://8080-")
+  } 
 };
 
 /*
