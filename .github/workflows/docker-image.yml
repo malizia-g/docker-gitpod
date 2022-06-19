@@ -47,6 +47,7 @@ jobs:
           context: ./client
           file: ./client/Dockerfile.prod
           tags: ghcr.io/malizia-g/client-ci:latest
+          push: true
          
       #     # build on feature branches, push only on main branch
       #     push: ${{ github.ref == 'refs/heads/main' }}
