@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrlServer: 'https://8080-maliziag-dockergitpod-6ia3zbqltpp.ws-eu38.gitpod.io/'
+  baseUrlServer: 'UPDATE_ME'
 };
 
 /*

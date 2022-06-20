@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { FoodData } from './models/fooData.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,11 @@ export class AnimalsService {
   sendNewAnimal(animal : Animal) : Observable<Animal>
   {
     return this.http.post<Animal>(environment.baseUrlServer + 'api/newAnimal', animal,this.httpOptions)
+  }
+
+  nutri(animal : Animal) : Observable<FoodData>
+  {
+    return this.http.post<FoodData>(environment.baseUrlServer + 'api/feedAnimal', animal,this.httpOptions)
   }
 }
 
