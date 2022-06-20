@@ -19,6 +19,3 @@ COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 #Si copia il progetto nella cartella da cui nginx pesca i file html
 COPY --from=builder /app/dist/client /usr/share/nginx/html
 
-
-#TODO:Build the image
-#docker build -f ./client/Dockerfile.prod -t ghcr.io/fmalizia/client:latest ./client

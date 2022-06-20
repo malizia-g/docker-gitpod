@@ -1,2 +1,3 @@
-{{animal.id}} - {{animal.name}} - {{animal.type}} 
-<button (click)="nutri()">nutri</button>
+{{animal.id}} - {{animal.name}} - {{animal.type}} -
+<button (click)="nutri()">feed</button> -
+<span *ngIf="foodData != undefined">{{foodData.food_qty}} </span> kg of food today
