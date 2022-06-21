@@ -2,7 +2,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+<<<<<<< HEAD
 import { FoodData } from './models/fooData.model';
+=======
+import { FoodData } from './models/foodData.model';
+>>>>>>> 07-Deploy
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +17,7 @@ export class AnimalsService {
   
   //Il metodo fa una chiamata Http al server
   getAnimals() {
-    return this.http.get<VettAnimal>(environment.baseUrlServer + 'api/animals');
+    return this.http.get<VettAnimal>(environment.baseUrlServer + '/api/animals');
     //return this.http.get<VettAnimal>('/api/animals');
   }
 
@@ -22,7 +26,12 @@ export class AnimalsService {
   };
   sendNewAnimal(animal : Animal) : Observable<Animal>
   {
-    return this.http.post<Animal>(environment.baseUrlServer + 'api/newAnimal', animal,this.httpOptions)
+    return this.http.post<Animal>(environment.baseUrlServer + '/api/newAnimal', animal,this.httpOptions)
+  }
+
+  nutri(animal : Animal) : Observable<FoodData>
+  {
+    return this.http.post<FoodData>(environment.baseUrlServer + '/api/feedAnimal', animal,this.httpOptions)
   }
 
   nutri(animal : Animal) : Observable<FoodData>

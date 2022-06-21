@@ -48,7 +48,8 @@ services: #<- Crea il redis-container
       
   client:
       build:
-        dockerfile: Dockerfile
+        # Usiamo il Dockerfile per la produzione
+        dockerfile: Dockerfile.prod
         context: ./client
       volumes:
         #In questo modo dico a docker di usare la cartella del container /app/node_modules come volume

@@ -1,6 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Animal, AnimalsService } from '../animals.service';
+<<<<<<< HEAD
 import { FoodData } from '../models/fooData.model';
+=======
+import { FoodData } from '../models/foodData.model';
+>>>>>>> 07-Deploy
 
 @Component({
   selector: 'app-animal',

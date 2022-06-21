@@ -41,5 +41,7 @@ export class AppComponent {
         this.data.push(a);
       }
     )
+
+    
   }
 }
