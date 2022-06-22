@@ -59,9 +59,9 @@ services: #<- Crea il redis-container
         #Qui mappa tutto il contenuto della cartella locale client nella cartella app dell'immagine
         #Ricorda che la WORKDIR dell'immagine è la cartella app
         - ./client:/app 
-      environment:
+      #environment:
       #Inietto la variabile d'ambiente con l'URL di Gitpod
-        - NG_APP_GITPOD_WORKSPACE_URL=${GITPOD_WORKSPACE_URL}
+      #  - NG_APP_GITPOD_WORKSPACE_URL=${GITPOD_WORKSPACE_URL}
       ports:
         - 4200:4200
       networks:
