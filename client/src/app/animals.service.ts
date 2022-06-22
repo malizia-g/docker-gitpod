@@ -15,7 +15,7 @@ export class AnimalsService {
     //return this.http.get<VettAnimal>(environment.baseUrlServer + '/api/animals');
     return this.http.get<VettAnimal>('/api/animals');
   }
-  
+
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
