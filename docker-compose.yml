@@ -18,41 +18,24 @@ x-redis-common-variables: #<- Crea delle variabili d'ambiente per redis
 
 services: 
   api-server:
-    #Descrivere qui
-    image: ghcr.io/malizia-g/server-ci:latest
+    image: ghcr.io/malizia-g/server-ci:0.0
     environment:
       <<: *mongo-variables
       <<: *redis-variables
-    
-    volumes:
-      - ./server:/app
     ports:
       - 5000:5000
-    networks:
-    - shared-network
 
+
+  #TODO: EXPLAIN HERE
   nginx-proxy:
     restart: always
-    build:
-      dockerfile: Dockerfile
-      context: ./nginx
+    image: ghcr.io/malizia-g/nginx-ci:0.0
     ports: 
-      - 8080:8080
-    networks:
-      - shared-network
-      
+      - 80:8080
+
+   
+   #TODO: EXPLAIN HERE   
   client:
-      image: ghcr.io/malizia-g/client-ci:latest
-      volumes:
-        - /app/node_modules 
-        - ./client:/app 
-      environment:
-      #Inietto la variabile d'ambiente con l'URL di Gitpod
-        - NG_APP_GITPOD_WORKSPACE_URL=${GITPOD_WORKSPACE_URL}
+      image: ghcr.io/malizia-g/client-ci:0.0
       ports:
         - 4200:4200
-      networks:
-      - shared-network
-
-networks:
-  shared-network:

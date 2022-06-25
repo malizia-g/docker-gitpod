@@ -49,6 +49,7 @@ jobs:
           tags: ghcr.io/malizia-g/server-ci:0.0
           push: true
 
+      #TODO: Sistemare su spiega
       - name: Build Nginx image and push to Docker Hub and GitHub Container Registry
         uses: docker/build-push-action@v3
         with:
