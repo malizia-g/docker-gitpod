@@ -9,8 +9,10 @@ CORS(app)
 
 #Creo una funzione che posso riciclare ogni volta che devo accedere al DB
 def get_db():
-    client = MongoClient(host='test_mongodb',
-                         port=27017, 
+    print(os.environ["MONGO_HOST"], flush=True)
+    print(os.environ["MONGO_PORT"], flush=True)
+    client = MongoClient(host= os.environ["MONGO_HOST"],
+                         port=int(os.environ["MONGO_PORT"]), 
                          username=os.environ["MONGO_INITDB_ROOT_USERNAME"], 
                          password=os.environ["MONGO_INITDB_ROOT_PASSWORD"],
                          authSource="admin")

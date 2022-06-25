@@ -7,8 +7,9 @@ x-common-variables: # <- Crea delle variabili d'ambiente per mongo
     MONGO_INITDB_DATABASE: animal_db
     MONGO_INITDB_ROOT_USERNAME: root
     MONGO_INITDB_ROOT_PASSWORD: pass
-    MONGO_HOST: test_mongodb
+    MONGO_HOST: mongodb+srv://cluster0.olw9u.mongodb.net
     MONGO_PORT: 27017
+
 
 x-redis-common-variables: #<- Crea delle variabili d'ambiente per redis
    &redis-variables 
@@ -24,9 +25,7 @@ services: #<- Crea il redis-container
       - shared-network
 
   api-server:
-    build:
-      dockerfile: Dockerfile
-      context: ./server
+    image: ghcr.io/malizia-g/server-ci:latest
     environment:
       <<: *mongo-variables
       <<: *redis-variables
@@ -50,7 +49,8 @@ services: #<- Crea il redis-container
       
   client:
       build:
-        dockerfile: Dockerfile
+        # Usiamo il Dockerfile per la produzione
+        dockerfile: Dockerfile.prod
         context: ./client
       volumes:
         #In questo modo dico a docker di usare la cartella del container /app/node_modules come volume

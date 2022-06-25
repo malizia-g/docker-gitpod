@@ -2,22 +2,24 @@
 ---
 version: '3.7'
 
+#TODO: Explain mongo atlas, remember to update the requirements.txt
 x-common-variables: # <- Crea delle variabili d'ambiente per mongo
   &mongo-variables
     MONGO_INITDB_DATABASE: animal_db
     MONGO_INITDB_ROOT_USERNAME: root
     MONGO_INITDB_ROOT_PASSWORD: pass
+    MONGO_HOST: mongodb+srv://cluster0.olw9u.mongodb.net
+    MONGO_PORT: 27017
 
 x-redis-common-variables: #<- Crea delle variabili d'ambiente per redis
    &redis-variables 
-    REDIS_HOST: redis
+    REDIS_HOST: multi-docker-redis.m8xvjn.ng.0001.eus1.cache.amazonaws.com
     REDIS_PORT: 6379 
 
 services: 
   api-server:
-    build:
-      dockerfile: Dockerfile
-      context: ./server
+    #Descrivere qui
+    image: ghcr.io/malizia-g/server-ci:latest
     environment:
       <<: *mongo-variables
       <<: *redis-variables
@@ -40,9 +42,7 @@ services:
       - shared-network
       
   client:
-      build:
-        dockerfile: Dockerfile
-        context: ./client
+      image: ghcr.io/malizia-g/client-ci:latest
       volumes:
         - /app/node_modules 
         - ./client:/app 
