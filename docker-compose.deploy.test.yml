@@ -1,0 +1,85 @@
+%YAML 1.1 #<-Passa alla versione 1.1 di YAML
+---
+version: '3.7'
+
+x-common-variables: # <- Crea delle variabili d'ambiente per mongo
+  &mongo-variables
+    MONGO_INITDB_DATABASE: animal_db
+    MONGO_INITDB_ROOT_USERNAME: root
+    MONGO_INITDB_ROOT_PASSWORD: pass
+    MONGO_HOST: mongodb+srv://cluster0.olw9u.mongodb.net
+    MONGO_PORT: 27017
+
+
+x-redis-common-variables: #<- Crea delle variabili d'ambiente per redis
+   &redis-variables 
+    REDIS_HOST: redis
+    REDIS_PORT: 6379 
+
+services: #<- Crea il redis-container
+  redis:
+    image: 'redis:latest'
+    ports:
+      - 6379:6379
+    networks:
+      - shared-network
+
+  api-server:
+    image: ghcr.io/malizia-g/server-ci:latest
+    environment:
+      <<: *mongo-variables
+      <<: *redis-variables
+    
+    volumes:
+      - ./server:/app
+    ports:
+      - 5000:5000
+    networks:
+    - shared-network
+
+  nginx-proxy:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports: 
+      - 8080:8080
+    networks:
+      - shared-network
+      
+  client:
+      build:
+        # Usiamo il Dockerfile per la produzione
+        dockerfile: Dockerfile.prod
+        context: ./client
+      volumes:
+        #In questo modo dico a docker di usare la cartella del container /app/node_modules come volume
+        #La cartella locale node_modules (se non ha modifiche) non verrà più copiata perchè il volume esiste già
+        #Se c'è già l'immagine docker-compose non la builda
+        - /app/node_modules 
+        #Qui mappa tutto il contenuto della cartella locale client nella cartella app dell'immagine
+        #Ricorda che la WORKDIR dell'immagine è la cartella app
+        - ./client:/app 
+      environment:
+      #Inietto la variabile d'ambiente con l'URL di Gitpod
+        - NG_APP_GITPOD_WORKSPACE_URL=${GITPOD_WORKSPACE_URL}
+      ports:
+        - 4200:4200
+      networks:
+      - shared-network
+
+  mongo-server:
+    image: mongo:latest     #Possiamo scaricare l'immagine anche da
+    hostname: test_mongodb  #cambia l'hostname da mongo-server a test_mongo
+    environment:  *mongo-variables          
+    volumes:
+      #Crea un nuovo bineded volume per il container di mongoDB (condividento il file init-db.js)
+      # https://stackoverflow.com/questions/42912755/how-to-create-a-db-for-mongodb-container-on-start-up
+      - ./mongo-server/init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro    
+    ports:
+      - 27017:27017
+    networks:
+      - shared-network
+
+networks:
+  shared-network:
