@@ -28,7 +28,7 @@ export class AnimalsService {
 
   nutri(animal : Animal) : Observable<FoodData>
   {
-    return this.http.post<FoodData>(environment.baseUrlServer + 'api/feedAnimal', animal,this.httpOptions)
+    return this.http.post<FoodData>('/api/feedAnimal', animal,this.httpOptions)
   }
 }
 

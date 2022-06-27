@@ -1,0 +1,12 @@
+public ip ... 
+ec2-15-160-142-197.eu-south-1.compute.amazonaws.com
+
+Nota: ec2-user è l'utente di default
+
+
+ssh -i ec2.pem ec2-user@ec2-15-160-142-197.eu-south-1.compute.amazonaws.com
+
+Connettere EC2 INstance to redis
+https://aws.amazon.com/it/premiumsupport/knowledge-center/elasticache-connection-test/
+
+src/redis-cli multi-docker-redis.m8xvjn.ng.0001.eus1.cache.amazonaws.com -p 6379
