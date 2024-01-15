@@ -26,8 +26,7 @@ services: #<- Crea il redis-container
       dockerfile: Dockerfile
       context: ./server
     environment:
-      <<: *mongo-variables
-      <<: *redis-variables
+      <<: [*mongo-variables, *redis-variables]
     
     volumes:
       - ./server:/app
