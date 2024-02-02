@@ -41,7 +41,7 @@ jobs:
           # relative path to the place where source code with Dockerfile is located
           context: ./client
           file: ./client/Dockerfile.prod
-          tags: ghcr.io/malizia-g/client-ci:latest
+          tags: ghcr.io/malizia-g/client-ci:0.1
           push: true
 
       - name: Build image server and push to Docker Hub and GitHub Container Registry
@@ -50,7 +50,7 @@ jobs:
           # relative path to the place where source code with Dockerfile is located
           context: ./server
           file: ./server/Dockerfile.prod
-          tags: ghcr.io/malizia-g/server-ci:latest
+          tags: ghcr.io/malizia-g/server-ci:0.2
           push: true
          
       #     # build on feature branches, push only on main branch
