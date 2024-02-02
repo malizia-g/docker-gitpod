@@ -50,7 +50,7 @@ jobs:
           # relative path to the place where source code with Dockerfile is located
           context: ./server
           file: ./server/Dockerfile.prod
-          tags: ghcr.io/malizia-g/server-ci:0.2
+          tags: ghcr.io/malizia-g/server-ci:0.0
           push: true
          
       #     # build on feature branches, push only on main branch
